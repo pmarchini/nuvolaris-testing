@@ -29,10 +29,21 @@ tasks:
   pull-all: # cmd to pull all runtimes
     cmds: 
       - docker pull openwhisk/action-nodejs-v14:latest 
+      - docker pull openwhisk/action-golang-v1.13
+      - docker pull openwhisk/action-golang-v1.15
+      - docker pull openwhisk/action-golang-v1.16
+      - docker pull openwhisk/action-golang-v1.17:nightly
 
   pull-nodejs-runtime: # cmd to pull only nodejs runtime if we want to run tests for only that
     cmds:
       - docker pull openwhisk/action-nodejs-v14:latest 
+
+  pull-golang-runtime: # cmd to pull only golang runtime if we want to run tests for only that
+    cmds:
+      - docker pull openwhisk/action-golang-v1.13
+      - docker pull openwhisk/action-golang-v1.15
+      - docker pull openwhisk/action-golang-v1.16
+      - docker pull openwhisk/action-golang-v1.17:nightly
 
   test-all:
     deps:
@@ -47,3 +58,10 @@ tasks:
     dir: ./tests
     cmds:
       - jest nodejs-testing
+
+  test-golang:
+    deps:
+     - pull-golang-runtime
+    dir: ./tests
+    cmds:
+      - jest golang-testing
